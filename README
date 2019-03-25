@@ -2,3 +2,5 @@ Install the requirements with pip and run the notebook with "jupyter notebook <n
 
 ARAS group: http://www.astrosurf.com/aras/
 Please contact the administrators of the ARAS website if you intend to use their spectra for publications.
+
+You can also visualise the notebooks with the nbviewer [here|https://nbviewer.jupyter.org/github/ivandga/ArasSpectraNotebooks/]
