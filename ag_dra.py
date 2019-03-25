@@ -101,7 +101,7 @@ else:
 # 
 # **plot_line**: plots the normalised flux (normalised with respect to the maximum flux of the dataset) from a dataset (specified with the index _i_ with the respect to the data structure) against the velocity array, centered on a specific wavelength _wl_; _dobs_ and _labwl_ specificy if the label of the plotted curve will show the data of the observation and/or the wavelength; _alpha_ (0,1) specifies the transparency of the curve; _factor_ rescales the curve.
 
-# In[5]:
+# In[ ]:
 
 
 def calculate_velocity(wave, wavelength):
@@ -124,7 +124,7 @@ def plot_line(i, wl, dobs=False, labwl=False, alpha=1, factor=1):
 
 # #### Plot same line from different observations
 
-# In[6]:
+# In[ ]:
 
 
 fig = pl.figure(1, figsize = (15, 7))
@@ -143,7 +143,7 @@ pl.legend()
 
 # #### Plot several lines from same observations
 
-# In[7]:
+# In[ ]:
 
 
 fig = pl.figure(2, figsize = (15, 7))
@@ -160,7 +160,7 @@ pl.ylabel('flux (a.u)')
 pl.legend()
 
 
-# In[9]:
+# In[ ]:
 
 
 # Convert the notebook to script
