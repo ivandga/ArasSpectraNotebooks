@@ -123,6 +123,8 @@ def plot_line(i, wl, dobs=False, labwl=False, alpha=1, factor=1):
     pl.plot(vel, flux*factor, label = label_for_line, alpha=alpha)
 
 
+# #### Plot same line from different observations
+
 # In[6]:
 
 
@@ -139,6 +141,8 @@ pl.ylim(0, 0.5)
 pl.ylabel('flux (a.u)')
 pl.legend()
 
+
+# #### Plot several lines from same observations
 
 # In[7]:
 
