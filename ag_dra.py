@@ -20,7 +20,6 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import numpy as np
 import scipy as sp
-from scipy.signal import savgol_filter
 import os
 import pickle
 
@@ -161,7 +160,7 @@ pl.ylabel('flux (a.u)')
 pl.legend()
 
 
-# In[8]:
+# In[9]:
 
 
 # Convert the notebook to script
