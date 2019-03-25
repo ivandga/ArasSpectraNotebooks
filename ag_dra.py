@@ -9,7 +9,7 @@
 
 # _Importing modules and stuff_
 
-# In[ ]:
+# In[1]:
 
 
 import astropy.utils.data as aua
@@ -27,7 +27,7 @@ import pickle
 
 # _Define Object ARAS Website link and requirements for spectra_
 
-# In[ ]:
+# In[2]:
 
 
 rootsite = "http://www.astrosurf.com/aras/Aras_DataBase/Symbiotics/"
@@ -38,7 +38,7 @@ minimal_wavelength_range = 2000
 
 # _Scraping the page of the object of interest, looking for .fit files_
 
-# In[ ]:
+# In[3]:
 
 
 rootsite = "http://www.astrosurf.com/aras/Aras_DataBase/Symbiotics/"
@@ -57,15 +57,20 @@ for link in soup.findAll('a'):
 
 # _Download each fit and save it into pickle file if resolution and wavelength range requirements are respected. If a pickle dump file is already existing in the current directory, nothing will be downloaded and the data will be loaded in memory_
 
-# In[ ]:
+# In[4]:
 
 
 pickle_file = 'ag_dra.dump.pckl'
 if not os.path.isfile(pickle_file):
     data = []
     for link in spectra_list:
-        hdul = aif.open(aua.download_file(link))
-        hdr = hdul[0].header
+        try:
+            hdul = aif.open(aua.download_file(link))
+            hdr = hdul[0].header
+            spectrum = hdul[0].data
+        except:
+            print("broken link? {}".format(link))
+            continue
         # calculate resolution of spectrum
         resolution = hdr['CRVAL1']/hdr['CDELT1']
         if resolution >= minimal_resolution:
@@ -73,7 +78,6 @@ if not os.path.isfile(pickle_file):
             wavelengths = hdr['CDELT1']*np.arange(hdr['NAXIS1']) + hdr['CRVAL1']
             wavelength_range = wavelengths[-1] - wavelengths[0]
             if wavelength_range >= minimal_wavelength_range:
-                spectrum = hdul[0].data
                 data.append({"w" : wavelengths, "f" : spectrum, 
                              "do" : hdr['DATE-OBS'], "hdr" : hdr})
                 print("Saving {}".format(link.split("/")[-1]))
@@ -98,7 +102,7 @@ else:
 # 
 # **plot_line**: plots the normalised flux (normalised with respect to the maximum flux of the dataset) from a dataset (specified with the index _i_ with the respect to the data structure) against the velocity array, centered on a specific wavelength _wl_; _dobs_ and _labwl_ specificy if the label of the plotted curve will show the data of the observation and/or the wavelength; _alpha_ (0,1) specifies the transparency of the curve; _factor_ rescales the curve.
 
-# In[ ]:
+# In[5]:
 
 
 def calculate_velocity(wave, wavelength):
@@ -119,7 +123,7 @@ def plot_line(i, wl, dobs=False, labwl=False, alpha=1, factor=1):
     pl.plot(vel, flux*factor, label = label_for_line, alpha=alpha)
 
 
-# In[ ]:
+# In[6]:
 
 
 fig = pl.figure(1, figsize = (15, 7))
@@ -136,7 +140,7 @@ pl.ylabel('flux (a.u)')
 pl.legend()
 
 
-# In[ ]:
+# In[7]:
 
 
 fig = pl.figure(2, figsize = (15, 7))
@@ -153,9 +157,11 @@ pl.ylabel('flux (a.u)')
 pl.legend()
 
 
-# In[ ]:
+# In[8]:
 
 
 # Convert the notebook to script
 get_ipython().system('jupyter nbconvert --to script ag_dra.ipynb')
+# Calculate requirements
+get_ipython().system('pipreqs . --force')
 
