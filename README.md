@@ -1,6 +1,6 @@
-Clone the repo and install the requirements with `pip install -r requirements.txt`.
+Clone the repo and install the requirements with `pip3 install -r requirements.txt`.
 
-Run the notebook (you need `jupyter` for it) with `jupyter notebook <object-of-interest>.ipynb`.
+Run the notebook (you need `jupyter` for it, you can also install with pip) with `jupyter notebook <object-of-interest>.ipynb`.
 
 You can also execute the .py file, if you don't need or want to run the jupyter environment.
 
