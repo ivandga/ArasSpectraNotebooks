@@ -33,34 +33,46 @@ rootsite = "http://www.astrosurf.com/aras/Aras_DataBase/Symbiotics/"
 topic = "AGDra.htm"
 minimal_resolution = 8000
 minimal_wavelength_range = 2000
+spectra_list_dump = 'ag_dra.spectra_list.pckl'
+spectra_data_dump = 'ag_dra.data_dump.pckl'
 
 
 # _Scraping the page of the object of interest, looking for .fit files_
 
-# In[3]:
+# In[5]:
 
 
-rootsite = "http://www.astrosurf.com/aras/Aras_DataBase/Symbiotics/"
-topic = "AGDra.htm"
-site = "{}/{}".format(rootsite, topic)
-soup = BeautifulSoup(urlopen(site), "html")
-spectra_list = []
-for link in soup.findAll('a'):
-    linkhref = link.get('href')
-    if ".fit" in linkhref:
-        if "http" not in linkhref:
-            spectra_list.append(rootsite+linkhref)
-        else:
-            spectra_list.append(linkhref)
+def download_list_spectra(rootsite, startname):
+    site = "{}/{}".format(rootsite, topic)
+    soup = BeautifulSoup(urlopen(site), "html")
+    spectra_list = []
+    for link in soup.findAll('a'):
+        linkhref = link.get('href')
+        if ".fit" in linkhref:
+            spectrum_link = rootsite+linkhref if "http" not in linkhref else linkhref
+    return spectra_list
 
 
 # _Download each fit and save it into pickle file if resolution and wavelength range requirements are respected. If a pickle dump file is already existing in the current directory, nothing will be downloaded and the data will be loaded in memory_
 
-# In[4]:
+# In[8]:
 
 
-pickle_file = 'ag_dra.dump.pckl'
-if not os.path.isfile(pickle_file):
+spectra_list = download_list_spectra(rootsite, topic)
+if not os.path.isfile(spectra_list_dump):
+    with open(spectra_list_dump, 'wb') as output:
+        pickle.dump(spectra_list, output)
+else:
+    spectra_list_dump = pickle.load(open(spectra_list_dump, "rb"))
+    if len(set(spectra_list)) > len(set(spectra_list_dump)):
+        with open(spectra_list_dump, 'wb') as output:
+            pickle.dump(spectra_list, output)
+
+
+# In[ ]:
+
+
+if not os.path.isfile(spectra_data_dump):
     data = []
     for link in spectra_list:
         try:
@@ -68,7 +80,7 @@ if not os.path.isfile(pickle_file):
             hdr = hdul[0].header
             spectrum = hdul[0].data
         except:
-            print("broken link? {}".format(link))
+            print("Broken file? {}".format(link))
             continue
         # calculate resolution of spectrum
         resolution = hdr['CRVAL1']/hdr['CDELT1']
@@ -82,15 +94,12 @@ if not os.path.isfile(pickle_file):
                 print("Saving {}".format(link.split("/")[-1]))
                 
     print("Saving {} spectra in total".format(len(data)))
-    with open(pickle_file, 'wb') as output:
+    with open(spectra_data_dump, 'wb') as output:
         pickle.dump(data, output)
-elif os.path.isfile(pickle_file):
-    data = []
-    print("Pickle dump {} found".format(pickle_file))
-    data = pickle.load(open(pickle_file, "rb"))
+elif os.path.isfile(spectra_data_dump):
+    print("Pickle dump {} found".format(spectra_data_dump))
+    data = pickle.load(open(spectra_data_dump, "rb"))
     print("Loaded {} spectra".format(len(data)))
-else:
-    print("eh what do you want??")
 
 
 # _Some helpful methods_
