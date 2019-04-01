@@ -1,5 +1,5 @@
+numpy==1.16.2
 astropy==3.1.2
-matplotlib==3.0.1
 scipy==1.2.1
-numpy==1.13.3
+matplotlib==3.0.3
 beautifulsoup4==4.7.1
