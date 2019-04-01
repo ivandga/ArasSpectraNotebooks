@@ -9,7 +9,7 @@
 
 # _Importing modules and stuff_
 
-# In[13]:
+# In[1]:
 
 
 import astropy.utils.data as aua
@@ -26,12 +26,12 @@ import pickle
 
 # _Define Object ARAS Website link and requirements for spectra._
 
-# In[14]:
+# In[2]:
 
 
 rootsite = "http://www.astrosurf.com/aras/Aras_DataBase/Symbiotics/"
 topic = "AGDra.htm"
-minimal_resolution = 8000
+minimal_resolution = 15000
 minimal_wavelength_range = 2000
 spectra_list_dump = "ag_dra.spectra_list.pckl"
 spectra_data_dump = "ag_dra.data_dump.pckl"
@@ -40,7 +40,7 @@ spectra_data_dump = "ag_dra.data_dump.pckl"
 # _Method to scrap the ARAS page of the object of interest, looking for .fit files.
 # It returns a list with the .fit files addresses._
 
-# In[15]:
+# In[3]:
 
 
 def download_list_spectra(rootsite, startname):
@@ -59,7 +59,7 @@ def download_list_spectra(rootsite, startname):
 
 # _Download each fit and save it into pickle file if resolution and wavelength range requirements are respected. If a pickle dump file is already existing in the current directory, nothing will be downloaded and the data will be loaded in memory_
 
-# In[16]:
+# In[4]:
 
 
 spectra_list = download_list_spectra(rootsite, topic)
@@ -77,7 +77,7 @@ else:
 
 # _If no pickle data dump is found, each spectrum from the .fit list will be downloaded and exported to a data structure (data) if the resolution and wavelength range requirements are respected. The data structure will be then saved to file. If a pickle dump file is already existing in the current directory, nothing will be downloaded and the data will be loaded from the file in memory._
 
-# In[20]:
+# In[5]:
 
 
 if not os.path.isfile(spectra_data_dump):
@@ -119,7 +119,7 @@ elif os.path.isfile(spectra_data_dump):
 # 
 # **plot_line**: plots the normalised flux (normalised with respect to the maximum flux of the dataset) from a dataset (specified with the index _i_ with the respect to the data structure) against the velocity array, centered on a specific wavelength _wl_; _dobs_ and _labwl_ specificy if the label of the plotted curve will show the data of the observation and/or the wavelength; _alpha_ (0,1) specifies the transparency of the curve; _factor_ rescales the curve.
 
-# In[21]:
+# In[6]:
 
 
 def calculate_velocity(wave, wavelength):
@@ -142,7 +142,7 @@ def plot_line(i, wl, dobs=False, labwl=False, alpha=1, factor=1):
 
 # #### Plot same line from different observations
 
-# In[22]:
+# In[7]:
 
 
 fig = pl.figure(1, figsize = (15, 7))
@@ -161,7 +161,7 @@ pl.legend()
 
 # #### Plot several lines from same observations
 
-# In[23]:
+# In[ ]:
 
 
 fig = pl.figure(2, figsize = (15, 7))
@@ -178,7 +178,7 @@ pl.ylabel('flux (a.u)')
 pl.legend()
 
 
-# In[25]:
+# In[ ]:
 
 
 # Convert the notebook to script
