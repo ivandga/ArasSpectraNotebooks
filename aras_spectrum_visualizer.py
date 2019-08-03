@@ -110,7 +110,7 @@ pl.plot(data["w"], data["f"])
 # Convert the notebook to script
 get_ipython().system('jupyter-nbconvert --to script aras_spectrum_visualizer.ipynb')
 # Calculate requirements
-get_ipython().system('pipreqs . --force')
+#!pipreqs . --force
 
 
 # In[ ]:
