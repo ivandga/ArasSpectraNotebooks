@@ -138,6 +138,10 @@ def plot_line(i, wl, dobs=False, labwl=False, alpha=1, factor=1):
         label_for_line = "#{} - {} - {}".format(i, linelabel(wl), data[i]["do"])
     flux = data[i]["f"]/max(data[i]["f"])
     pl.plot(vel, flux*factor, label = label_for_line, alpha=alpha)
+    
+def normfluxvel(i, wl, vel1, vel2):
+    vel = calculate_velocity(data[i]["w"], wl)
+    velmask = (vel > vel1) && (vel < vel2)
 
 
 # #### Plot same line from different observations
@@ -161,7 +165,7 @@ pl.legend()
 
 # #### Plot several lines from same observations
 
-# In[ ]:
+# In[8]:
 
 
 fig = pl.figure(2, figsize = (15, 7))
@@ -178,7 +182,7 @@ pl.ylabel('flux (a.u)')
 pl.legend()
 
 
-# In[ ]:
+# In[9]:
 
 
 # Convert the notebook to script
