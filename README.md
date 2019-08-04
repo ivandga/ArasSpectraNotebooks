@@ -16,7 +16,7 @@ Start a jupyter notebook  with `jupyter-notebook <name>.ipynb`.
 
 If you do not want the jupyter environment convert the notebook to a .py script with `jupyter-nbconvert <name>.ipynb --to python`.
 
-You can also start an online interactive session with [mybinder](https://mybinder.org/): there you just need to copy the URL of this github repo and you can launch the notebooks, once the container is ready.
+You can also start an online interactive session with [mybinder](https://mybinder.org/): there you just need to copy the URL of this github repo and you can launch the notebooks, once the container is ready. You have a shortcut here [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ivandga/ArasSpectraNotebooks/master)
 
 [Website](http://www.astrosurf.com/aras/) of the ARAS group.
 
