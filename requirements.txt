@@ -1,5 +1,5 @@
 appdirs==1.4.3
-astropy==3.2.1
+astropy==5.3.3
 attrs==19.1.0
 backcall==0.1.0
 beautifulsoup4==4.8.0
